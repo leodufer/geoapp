@@ -54,7 +54,10 @@ public class MapsActivity extends FragmentActivity {
                    mMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
                        @Override
                        public void onInfoWindowClick(Marker marker) {
+
                            final Local l = mHashMap.get(marker);
+
+                           if(l!=null){
                            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                            builder.setTitle(l.getTitulo());
                            String disponible = l.getDisponible()? "Disponible":"No Disoponible";
@@ -77,7 +80,7 @@ public class MapsActivity extends FragmentActivity {
                            dialog.setButton2("Ver Fotos", new DialogInterface.OnClickListener() {
                                @Override
                                public void onClick(DialogInterface dialog, int which) {
-                                   Crouton.makeText(MapsActivity.this, "Ver fotos de " + l.get_id(), Style.INFO).show();
+                                   Crouton.makeText(MapsActivity.this, "Ver fotos", Style.CONFIRM).show();
 
                                    Intent i = new Intent(MapsActivity.this.getApplicationContext(), FotosActivity.class);
                                    i.putExtra("id", l.get_id());
@@ -86,14 +89,17 @@ public class MapsActivity extends FragmentActivity {
                            });
                            dialog.show();
 
-
+                           }
                        }
                    });
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
-                            Local l = mHashMap.get(marker);
-                            Crouton.makeText(MapsActivity.this,l.getDescripcion(),Style.INFO).show();
+
+                                Local l = mHashMap.get(marker);
+                                if(l!=null)
+                                Crouton.makeText(MapsActivity.this,l.getDescripcion(),Style.INFO).show();
+
                             return false;
                         }
                     });
@@ -134,8 +140,8 @@ public class MapsActivity extends FragmentActivity {
         this.mMap.setMyLocationEnabled(true);
         this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(uninter, 16.0f));
         Marker marker = this.mMap.addMarker(new MarkerOptions()
-                .title("UNINTER - Sede CENTRAL")
-                .snippet("Sede Cidad del Este")
+                .title(MAIN_TITLE)
+                .snippet(MAIN_SNIPPET)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_uninter))
                 .position(uninter));
 
