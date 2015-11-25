@@ -84,6 +84,8 @@ public class MapsActivity extends FragmentActivity {
 
                                    Intent i = new Intent(MapsActivity.this.getApplicationContext(), FotosActivity.class);
                                    i.putExtra("id", l.get_id());
+                                   i.putExtra("titulo", l.getTitulo());
+                                   i.putExtra("detalle", l.getDescripcion());
                                    startActivity(i);
                                }
                            });
